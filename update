@@ -1,0 +1,10 @@
+#!/bin/bash
+if [ ! -d ".git" ]; then
+    echo "We have detected that you have downloaded norussianMW2-master.zip from the GitHub website. This is the WRONG way to download norussianMW2. Please download norussianMW2 with the command 'git clone --recursive https://github.com/norussianMW2Official/norussianMW2.git'"
+    exit
+else
+    git pull
+    git submodule update --init --recursive --remote
+    cmake .
+    make -j$(grep "^processor" /proc/cpuinfo | wc -l) "$@"
+fi
